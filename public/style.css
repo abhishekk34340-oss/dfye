@@ -1,0 +1,810 @@
+
+/* =========================================
+   CHATWAVE - MODERN CSS
+   Responsive + Animation + Scale Effects
+   ========================================= */
+
+/* ---------- Google Font ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+/* ---------- Reset ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+    color: #1e293b;
+
+    background:
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15), transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15), transparent 30%),
+        linear-gradient(135deg, #f8fafc, #eef2ff);
+
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+
+/* ---------- Selection ---------- */
+::selection {
+    background: #6366f1;
+    color: white;
+}
+
+
+/* ---------- Header ---------- */
+header {
+    width: 100%;
+    padding: 30px 8%;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    animation: slideDown 0.8s ease;
+}
+
+header h1 {
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+
+    background: linear-gradient(
+        90deg,
+        #4f46e5,
+        #7c3aed,
+        #06b6d4
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    margin-bottom: 15px;
+
+    animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+
+/* ---------- Navigation ---------- */
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    position: relative;
+
+    text-decoration: none;
+    color: #334155;
+
+    font-weight: 600;
+    padding: 10px 18px;
+
+    border-radius: 50px;
+
+    transition:
+        color 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+nav a:hover {
+    color: white;
+
+    background: linear-gradient(
+        135deg,
+        #4f46e5,
+        #7c3aed
+    );
+
+    transform: translateY(-3px) scale(1.05);
+
+    box-shadow:
+        0 8px 20px rgba(79, 70, 229, 0.3);
+}
+
+
+/* ---------- Main ---------- */
+main {
+    width: min(1100px, 90%);
+    margin: 60px auto;
+
+    animation: fadeUp 0.9s ease;
+}
+
+
+/* ---------- Sections ---------- */
+section {
+    position: relative;
+
+    margin-bottom: 30px;
+    padding: 35px;
+
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.7);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 10px 35px rgba(15, 23, 42, 0.08);
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
+}
+
+section:hover {
+    transform: translateY(-8px) scale(1.015);
+
+    box-shadow:
+        0 20px 45px rgba(79, 70, 229, 0.15);
+
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+
+/* ---------- Section Headings ---------- */
+section h2 {
+    color: #4f46e5;
+
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+
+    position: relative;
+    display: inline-block;
+}
+
+section h2::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+
+    width: 45px;
+    height: 4px;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        90deg,
+        #4f46e5,
+        #06b6d4
+    );
+
+    transition: width 0.4s ease;
+}
+
+section:hover h2::after {
+    width: 100%;
+}
+
+
+/* ---------- Paragraph ---------- */
+p {
+    color: #475569;
+    font-size: 1rem;
+    margin-bottom: 12px;
+}
+
+
+/* ---------- Lists ---------- */
+ul {
+    list-style: none;
+    margin-top: 15px;
+}
+
+section li {
+    position: relative;
+
+    margin: 12px 0;
+    padding: 14px 18px 14px 45px;
+
+    background: rgba(99, 102, 241, 0.06);
+
+    border-left: 4px solid #6366f1;
+
+    border-radius: 12px;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+section li::before {
+    content: "✓";
+
+    position: absolute;
+    left: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    background: #6366f1;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+section li:hover {
+    transform: translateX(8px) scale(1.02);
+
+    background: rgba(99, 102, 241, 0.12);
+
+    box-shadow:
+        0 8px 20px rgba(99, 102, 241, 0.1);
+}
+
+
+/* ---------- Links ---------- */
+a {
+    color: #4f46e5;
+    transition: all 0.3s ease;
+}
+
+main a:hover {
+    color: #7c3aed;
+    text-decoration: underline;
+}
+
+
+/* ---------- Horizontal Rule ---------- */
+hr {
+    border: none;
+
+    height: 1px;
+
+    width: 85%;
+
+    margin: 30px auto;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #cbd5e1,
+        transparent
+    );
+}
+
+
+/* =========================================
+   HOME PAGE
+   ========================================= */
+
+body > nav {
+    padding: 22px 8%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    box-shadow:
+        0 5px 25px rgba(15, 23, 42, 0.05);
+
+    animation: slideDown 0.8s ease;
+}
+
+body > nav h2 {
+    color: #4f46e5;
+    font-size: 1.5rem;
+
+    transition: transform 0.3s ease;
+}
+
+body > nav h2:hover {
+    transform: scale(1.05);
+}
+
+body > nav ul {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+}
+
+body > nav li {
+    margin: 0;
+    padding: 0;
+}
+
+body > nav a {
+    color: #334155;
+}
+
+
+/* ---------- Hero Section ---------- */
+body > section {
+    min-height: 75vh;
+
+    margin: 0;
+
+    padding: 100px 8%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(99, 102, 241, 0.2),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(6, 182, 212, 0.18),
+            transparent 35%
+        );
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    animation: fadeIn 1.2s ease;
+}
+
+body > section:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+body > section h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+
+    font-weight: 800;
+
+    letter-spacing: -3px;
+
+    background: linear-gradient(
+        90deg,
+        #4f46e5,
+        #7c3aed,
+        #06b6d4,
+        #4f46e5
+    );
+
+    background-size: 300% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    animation:
+        gradientMove 5s linear infinite,
+        heroEnter 1s ease;
+}
+
+body > section p {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+
+    margin: 20px 0 30px;
+
+    color: #64748b;
+
+    animation: fadeUp 1.2s ease;
+}
+
+
+/* ---------- Button ---------- */
+button {
+    border: none;
+    outline: none;
+
+    padding: 14px 30px;
+
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+
+    color: white;
+
+    cursor: pointer;
+
+    border-radius: 50px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    box-shadow:
+        0 10px 25px rgba(79, 70, 229, 0.3);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-5px) scale(1.08);
+
+    box-shadow:
+        0 15px 35px rgba(79, 70, 229, 0.45);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+
+/* ---------- Form ---------- */
+form {
+    margin-top: 20px;
+}
+
+form p {
+    margin-bottom: 20px;
+}
+
+label {
+    display: inline-block;
+
+    font-weight: 600;
+
+    color: #334155;
+
+    margin-bottom: 7px;
+}
+
+
+/* ---------- Inputs ---------- */
+input,
+textarea {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border: 2px solid #e2e8f0;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.8);
+
+    color: #1e293b;
+
+    font-family: inherit;
+    font-size: 1rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #6366f1;
+
+    background: white;
+
+    transform: scale(1.01);
+
+    box-shadow:
+        0 0 0 4px rgba(99, 102, 241, 0.12);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+
+/* ---------- Contact Form Button ---------- */
+form button {
+    margin-top: 5px;
+}
+
+
+/* ---------- Footer ---------- */
+footer {
+    padding: 30px 8%;
+
+    text-align: center;
+
+    background: #0f172a;
+
+    color: #cbd5e1;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+footer::before {
+    content: "";
+
+    position: absolute;
+
+    width: 200px;
+    height: 200px;
+
+    background: #6366f1;
+
+    border-radius: 50%;
+
+    filter: blur(100px);
+
+    opacity: 0.15;
+
+    top: -100px;
+    left: 20%;
+}
+
+footer p {
+    position: relative;
+
+    color: #cbd5e1;
+
+    margin: 5px 0;
+}
+
+footer p:first-child {
+    color: white;
+    font-weight: 600;
+}
+
+
+/* ---------- Footer Links ---------- */
+footer a {
+    color: #a5b4fc;
+}
+
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes heroEnter {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% center;
+    }
+
+    50% {
+        background-position: 100% center;
+    }
+
+    100% {
+        background-position: 0% center;
+    }
+}
+
+
+@keyframes titleGlow {
+    from {
+        filter: drop-shadow(
+            0 0 5px rgba(99, 102, 241, 0.15)
+        );
+    }
+
+    to {
+        filter: drop-shadow(
+            0 0 15px rgba(99, 102, 241, 0.35)
+        );
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    body > nav {
+        flex-direction: column;
+        gap: 15px;
+        padding: 18px 5%;
+    }
+
+    body > nav h2 {
+        font-size: 1.25rem;
+        text-align: center;
+    }
+
+    body > nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        padding: 8px 13px;
+        font-size: 0.9rem;
+    }
+
+    main {
+        width: 92%;
+        margin: 35px auto;
+    }
+
+    section {
+        padding: 25px 20px;
+        border-radius: 18px;
+    }
+
+    body > section {
+        min-height: 70vh;
+        padding: 70px 5%;
+    }
+
+    body > section h1 {
+        letter-spacing: -1px;
+    }
+
+    section h2 {
+        font-size: 1.35rem;
+    }
+
+    input,
+    textarea {
+        font-size: 16px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    body > nav ul {
+        gap: 3px;
+    }
+
+    nav a {
+        padding: 7px 10px;
+        font-size: 0.8rem;
+    }
+
+    body > section h1 {
+        font-size: 2.8rem;
+    }
+
+    body > section p {
+        font-size: 0.95rem;
+    }
+
+    button {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+    }
+
+    section {
+        padding: 22px 16px;
+    }
+
+    section li {
+        padding-left: 40px;
+    }
+}
+
+
+/* ---------- Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* ### What this CSS adds
+
+* ✨ Modern **glassmorphism UI**
+* 🎨 Animated gradient headings
+* 🔥 `scale()` hover animations
+* 🖱️ Smooth button hover/active effects
+* 📱 Fully responsive mobile design
+* 💫 Section hover animations
+* 🎯 Animated navigation
+* 📝 Modern contact form
+* 🌈 Gradient backgrounds
+* 🌊 Smooth scrolling
+* 💡 Input focus animations
+* 🌙 Dark modern footer
+* ⚡ `prefers-reduced-motion` accessibility support
+* 🎬 Page-load fade/slide animations
+
+You can keep your existing **four HTML files exactly as they are** and replace only `style.css` with the CSS above. */

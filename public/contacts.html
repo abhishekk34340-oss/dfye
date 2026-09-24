@@ -1,0 +1,556 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact Us - ChatWave</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+
+        <h1>Contact Us</h1>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="contacts.html">Contact</a>
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <section>
+
+            <h2>Get in Touch</h2>
+
+            <p>
+                If you have any questions, suggestions, or feedback,
+                feel free to contact us.
+            </p>
+
+        </section>
+
+
+        <section>
+
+            <h2>Contact Information</h2>
+
+            <p>
+                <strong>Email:</strong>
+                <a href="mailto:abhishekk34340@gmail.com">
+                    abhishekk34340@gmail.com
+                </a>
+            </p>
+
+            <p>
+                <strong>Phone:</strong>
+                <a href="tel:+919795177806">
+                    +91 9795177806
+                </a>
+            </p>
+
+            <p>
+                <strong>Address:</strong>
+                Baddhupur, Uttar Pradesh, India
+            </p>
+
+        </section>
+
+
+        <section>
+
+            <h2>Send Us a Message</h2>
+
+            <form id="contactForm">
+
+                <p>
+                    <label for="name">Name:</label>
+                    <br>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your name"
+                        required
+                    >
+                </p>
+
+
+                <p>
+                    <label for="email">Email:</label>
+                    <br>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </p>
+
+
+                <p>
+                    <label for="subject">Subject:</label>
+                    <br>
+
+                    <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        placeholder="Enter subject"
+                        required
+                    >
+                </p>
+
+
+                <p>
+                    <label for="message">Message:</label>
+                    <br>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="6"
+                        placeholder="Write your message here..."
+                        required
+                    ></textarea>
+                </p>
+
+
+                <p>
+
+                    <button type="submit" id="sendButton">
+                        Send Message
+                    </button>
+
+                </p>
+
+                <p id="formStatus"></p>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            &copy; 2026 ChatWave. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        const form = document.getElementById("contactForm");
+        const sendButton = document.getElementById("sendButton");
+        const formStatus = document.getElementById("formStatus");
+
+
+        form.addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+
+            sendButton.disabled = true;
+            sendButton.textContent = "Sending...";
+
+            formStatus.textContent = "";
+            formStatus.style.color = "#4f46e5";
+
+
+            const formData = {
+
+                name: document.getElementById("name").value.trim(),
+
+                email: document.getElementById("email").value.trim(),
+
+                subject: document.getElementById("subject").value.trim(),
+
+                message: document.getElementById("message").value.trim()
+
+            };
+
+
+            try {
+
+                const response = await fetch("/api/contact", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(formData)
+
+                });
+
+
+                const result = await response.json();
+
+
+                if (response.ok) {
+
+                    formStatus.textContent =
+                        "✓ Message sent successfully!";
+
+                    formStatus.style.color = "green";
+
+                    form.reset();
+
+                } else {
+
+                    formStatus.textContent =
+                        result.message || "Unable to send message.";
+
+                    formStatus.style.color = "red";
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+                formStatus.textContent =
+                    "Server error. Please try again later.";
+
+                formStatus.style.color = "red";
+
+            }
+
+
+            sendButton.disabled = false;
+            sendButton.textContent = "Send Message";
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+```
+
+### 2. `server.js`
+
+Agar tumhare project mein already `server.js` hai, to usmein contact route add karna hai. Agar nahi hai, ye complete server use kar sakte ho.
+
+```javascript
+const express = require("express");
+const path = require("path");
+const nodemailer = require("nodemailer");
+
+const app = express();
+
+const PORT = 3000;
+
+
+// ================================
+// Middleware
+// ================================
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+// Serve all frontend files
+app.use(express.static(path.join(__dirname, "public")));
+
+
+// ================================
+// Email Configuration
+// ================================
+
+const transporter = nodemailer.createTransport({
+
+    service: "gmail",
+
+    auth: {
+
+        user: process.env.EMAIL_USER,
+
+        pass: process.env.EMAIL_PASSWORD
+
+    }
+
+});
+
+
+// ================================
+// Contact API
+// ================================
+
+app.post("/api/contact", async (req, res) => {
+
+    try {
+
+        const {
+            name,
+            email,
+            subject,
+            message
+        } = req.body;
+
+
+        // Basic validation
+
+        if (!name || !email || !subject || !message) {
+
+            return res.status(400).json({
+
+                message: "Please fill in all fields."
+
+            });
+
+        }
+
+
+        // Send email
+
+        await transporter.sendMail({
+
+            from: process.env.EMAIL_USER,
+
+            to: "abhishekk34340@gmail.com",
+
+            replyTo: email,
+
+            subject: `ChatWave Contact: ${subject}`,
+
+            text: `
+Name: ${name}
+
+Email: ${email}
+
+Subject: ${subject}
+
+Message:
+
+${message}
+            `,
+
+            html: `
+                <div style="
+                    font-family: Arial, sans-serif;
+                    max-width: 600px;
+                    margin: auto;
+                    padding: 25px;
+                    background: #f8fafc;
+                    border-radius: 12px;
+                ">
+
+                    <h2 style="color: #4f46e5;">
+                        New ChatWave Contact Message
+                    </h2>
+
+                    <hr>
+
+                    <p>
+                        <strong>Name:</strong>
+                        ${escapeHtml(name)}
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong>
+                        ${escapeHtml(email)}
+                    </p>
+
+                    <p>
+                        <strong>Subject:</strong>
+                        ${escapeHtml(subject)}
+                    </p>
+
+                    <h3>Message</h3>
+
+                    <p style="
+                        white-space: pre-line;
+                        background: white;
+                        padding: 15px;
+                        border-radius: 8px;
+                    ">
+                        ${escapeHtml(message)}
+                    </p>
+
+                </div>
+            `
+
+        });
+
+
+        // Success response
+
+        res.status(200).json({
+
+            message: "Your message has been sent successfully."
+
+        });
+
+
+    } catch (error) {
+
+        console.error("Email error:", error);
+
+        res.status(500).json({
+
+            message: "Unable to send message. Please try again later."
+
+        });
+
+    }
+
+});
+
+
+// ================================
+// HTML escaping
+// ================================
+
+function escapeHtml(text) {
+
+    return String(text)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
+
+// ================================
+// Start Server
+// ================================
+
+app.listen(PORT, () => {
+
+    console.log(
+        `ChatWave server running at http://localhost:${PORT}`
+    );
+
+});
+```
+
+### 3. `package.json`
+
+```json
+{
+  "name": "chatwave",
+  "version": "1.0.0",
+  "description": "ChatWave real-time chat application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemailer": "^7.0.6",
+    "socket.io": "^4.8.1"
+  }
+}
+```
+
+### 4. Folder structure
+
+Tumhara project roughly aisa hona chahiye:
+
+```text
+ChatWave/
+│
+├── public/
+│   ├── index.html
+│   ├── about.html
+│   ├── services.html
+│   ├── contacts.html
+│   └── style.css
+│
+├── server.js
+├── package.json
+└── .env
+```
+
+### 5. `.env`
+
+Apne Gmail ka **normal password yahan mat daalna**. Gmail ke liye App Password use karo.
+
+```env
+EMAIL_USER=abhishekk34340@gmail.com
+EMAIL_PASSWORD=YOUR_16_DIGIT_GMAIL_APP_PASSWORD
+```
+
+`.env` ko `.gitignore` mein bhi add karna:
+
+```text
+.env
+node_modules/
+```
+
+### 6. Install aur run
+
+Project folder mein terminal kholo:
+
+```bash
+npm install
+```
+
+Phir:
+
+```bash
+npm start
+```
+
+Terminal mein:
+
+```text
+ChatWave server running at http://localhost:3000
+```
+
+dikhega.
+
+Phir browser mein:
+
+```text
+http://localhost:3000/contacts.html
+```
+
+open karo.
+
+**Ab flow hoga:**
+
+```text
+User form fill karta hai
+        ↓
+Send Message
+        ↓
+/api/contact
+        ↓
+Node.js + Nodemailer
+        ↓
+abhishekk34340@gmail.com
+```
+
+Aur `replyTo` ki wajah se tum received email par **Reply** karoge to reply directly visitor ke email par ja sakta hai.
+
+**Ek important baat:** Gmail account mein **2-Step Verification** enable karke Google ka **App Password** banana padega. Apna Gmail password ya App Password mujhe/chat mein mat bhejna.
